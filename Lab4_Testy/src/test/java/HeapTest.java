@@ -2,6 +2,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 public class HeapTest {
 
     @Test
@@ -11,7 +13,7 @@ public class HeapTest {
         heap.insert(0);
 
         assertEquals("size should be 1",1,heap.size());
-        assertEquals(0,heap.top(),0.001);
+        assertEquals(0,(int)heap.top(),0.001);
         assertEquals(1,heap.size());
     }
 
@@ -23,7 +25,7 @@ public class HeapTest {
         heap.insert(2);
 
         assertEquals("size should be 2",2,heap.size());
-        assertEquals(2,heap.top(),0.001);
+        assertEquals(2,(int)heap.top(),0.001);
     }
 
     @Test
@@ -36,7 +38,7 @@ public class HeapTest {
         heap.insert(5);
         heap.insert(6);
 
-        assertEquals(6,heap.top(),0.001);
+        assertEquals(6,(int)heap.top(),0.001);
     }
 
     @Test
@@ -48,8 +50,8 @@ public class HeapTest {
         heap.insert(10);
         heap.insert(3);
 
-        assertEquals(10, heap.extractMax(), 0.001);
-        assertEquals(6, heap.top(),0.001);
+        assertEquals(10, (int)heap.extractMax(), 0.001);
+        assertEquals(6, (int)heap.top(),0.001);
         assertEquals( 4, heap.size(), 0.001);
     }
 
@@ -64,7 +66,7 @@ public class HeapTest {
 
         heap.deleteMax();
 
-        assertEquals(10, heap.top(),0.001);
+        assertEquals(10, (int)heap.top(),0.001);
         assertEquals( 4, heap.size(), 0.001);
 
     }
@@ -80,17 +82,22 @@ public class HeapTest {
 
         heap.replace(33);
 
-        assertEquals(33, heap.top(),0.001);
+        assertEquals(33, (int)heap.top(),0.001);
         assertEquals(5, heap.size(),0.001);
     }
 
     @Test
     public void heapifyTest(){
         Heap heap = new Heap();
-        double [] list = new double[]{3, 22, 44, 1, 0};
+        ArrayList<Double> list = new ArrayList<Double>();
+        list.add(22.0);
+        list.add(33.3);
+        list.add(11.1);
+        list.add(44.0);
+        list.add(5.23);
         heap.heapify(list);
 
-        assertEquals(44, heap.top(),0.001);
+        assertEquals(44.0, (double)heap.top(),0.001);
         assertEquals(5, heap.size(),0.001);
     }
 
@@ -107,7 +114,7 @@ public class HeapTest {
 
         heap.meld(other);
 
-        assertEquals(33, heap.top(),0.001);
+        assertEquals(33, (int)heap.top(),0.001);
         assertEquals(0, other.size(),0.001);
         assertEquals(6,heap.size(),0.001);
     }

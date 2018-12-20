@@ -1,15 +1,16 @@
 import java.util.ArrayList;
+import java.util.Comparator;
 
-public class Heap {
+public class Heap<T extends Comparable<T>> {
 
     private int heapSize = 0;
-    private ArrayList<Double> tab = new ArrayList<>();
+    private ArrayList<T> tab = new ArrayList<>();
 
-    public void insert(double value) {
+    public void insert(T value) {
         int currentIndex = heapSize;
         int parentIndex = parentIndex(currentIndex);
         tab.add(value);
-        while( isChildGreaterThanParent(currentIndex, parentIndex) ) {
+        while( isChildGreaterThanParent(currentIndex, parentIndex)==1 ) {
             swapElements(currentIndex, parentIndex);
             currentIndex = parentIndex;
             parentIndex = parentIndex(currentIndex);
@@ -17,19 +18,19 @@ public class Heap {
         heapSize++;
     }
 
-    public boolean isChildGreaterThanParent(int currentIndex, int parentIndex) {
-        return tab.get(currentIndex) > tab.get(parentIndex);
+    public int isChildGreaterThanParent(int currentIndex, int parentIndex) {
+        return tab.get(currentIndex).compareTo(tab.get(parentIndex));
     }
 
     public void swapElements(int currentIndex, int parentIndex) {
-        Double parentValue = tab.get(parentIndex);
-        Double currentValue = tab.get(currentIndex);
+        T parentValue = tab.get(parentIndex);
+        T currentValue = tab.get(currentIndex);
         tab.set(parentIndex, currentValue);
         tab.set(currentIndex, parentValue);
     }
 
-    public Double parentValue(int currentIndex) {
-        Double parentValue = tab.get(parentIndex(currentIndex));
+    public T parentValue(int currentIndex) {
+        T parentValue = tab.get(parentIndex(currentIndex));
         return parentValue;
     }
 
@@ -53,7 +54,7 @@ public class Heap {
         return heapSize;
     }
 
-    public double top() {
+    public T top() {
         return tab.get(0);
     }
 
@@ -62,8 +63,8 @@ public class Heap {
             int currentIndex = 0;
             int right = rightIndex(currentIndex);
             int left = leftIndex(currentIndex);
-            while(isChildGreaterThanParent(left, currentIndex) ||
-                    isChildGreaterThanParent(right, currentIndex)) {
+            while(isChildGreaterThanParent(left, currentIndex)==1 ||
+                    isChildGreaterThanParent(right, currentIndex)==1) {
                 int oldIndex = currentIndex;
                 currentIndex = left;
                 if (currentIndex < right)
@@ -75,17 +76,17 @@ public class Heap {
         }
     }
 
-    public void heapify(double [] input){
-        for(int i=0; i<input.length;i++){
-            insert(input[i]);
+    public void heapify(ArrayList<T> input){
+        for(int i=0; i<input.size();i++){
+            insert(input.get(i));
         }
     }
 
-    public double extractMax(){
+    public T extractMax(){
         int lastIndex = heapSize-1;
         int currentIndex = 0;
         swapElements(currentIndex,lastIndex);
-        double result = tab.get(lastIndex);
+        T result = tab.get(lastIndex);
         tab.remove(lastIndex);
         heapSize --;
         heapify();
@@ -96,12 +97,12 @@ public class Heap {
         extractMax();
     }
 
-    public void replace(double value){
+    public void replace(T value){
         tab.set(0, value);
         heapify();
     }
 
-    public void meld(Heap other){
+    public void meld(Heap<T> other){
         while(other.size()>0){
             insert(other.extractMax());
         }
