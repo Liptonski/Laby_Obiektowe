@@ -1,5 +1,7 @@
 # Laby_Obiektowe
 
+* Projekt: https://github.com/Liptonski/Enigma
+
 Jako że występują niezgodności z ocenianiem, a rozumiem, że można się pogubić w repo, załączam opis:
 
 * Lab1.5 - Liczby pierwsze
